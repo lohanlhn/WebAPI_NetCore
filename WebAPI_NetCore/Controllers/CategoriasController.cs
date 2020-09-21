@@ -59,5 +59,21 @@ namespace WebAPI_NetCore.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Categoria> Delete(int id)
+        {
+            var categoria = _context.Categorias.Find(id);
+
+            if(categoria == null)
+            {
+                return NotFound();
+            }
+
+            _context.Categorias.Remove(categoria);
+            _context.SaveChanges();
+
+            return categoria;
+        }
     }
 }
