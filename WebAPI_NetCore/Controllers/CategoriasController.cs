@@ -20,6 +20,12 @@ namespace WebAPI_NetCore.Controllers
             _context = contexto;
         }
 
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> GetCategoriaProdutos()
+        {            
+            return _context.Categorias.Include(c => c.Produtos).ToList();
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
