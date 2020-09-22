@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI_NetCore.Context;
+using WebAPI_NetCore.Filters;
 using WebAPI_NetCore.Models;
 using WebAPI_NetCore.Services;
 
@@ -28,6 +29,7 @@ namespace WebAPI_NetCore.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(ApiLoggingFilter))]
         public async Task<ActionResult<IEnumerable<Produto>>> GetAsync()
         {
             return await _context.Produtos.AsNoTracking().ToListAsync();

@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebAPI_NetCore.Context;
+using WebAPI_NetCore.Extensions;
+using WebAPI_NetCore.Filters;
 using WebAPI_NetCore.Services;
 
 namespace WebAPI_NetCore
@@ -28,6 +30,7 @@ namespace WebAPI_NetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ApiLoggingFilter>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //Ignorar referencia ciclica
@@ -46,6 +49,8 @@ namespace WebAPI_NetCore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureExcetionHandler();
 
             app.UseHttpsRedirection();
 
