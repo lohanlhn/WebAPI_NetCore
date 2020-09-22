@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using WebAPI_NetCore.Validations;
 
 namespace WebAPI_NetCore.Models
 {
@@ -13,16 +14,18 @@ namespace WebAPI_NetCore.Models
     {
         [Key]
         public int ProdutoId { get; set; }
-        [Required]
-        [MaxLength(80)]
+        [Required(ErrorMessage = "O nome é obrigatório")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "O nome deve ter entre  5 e 20 caracteres")]
+        [PrimeiraLetraMaiuscula]
         public string Nome { get; set; }
         [Required]
-        [MaxLength(300)]
+        [StringLength(10, ErrorMessage = "A descrição deve ter no máximo {1} caracteres")]
         public string Descricao { get; set; }
-        [Required]        
+        [Required]
+        [Range(1, 10000, ErrorMessage = "O preço deve ter entre {1} e {2}")]
         public decimal Preco { get; set; }
         [Required]
-        [MaxLength(300)]
+        [StringLength(300, MinimumLength = 10)]
         public string ImageUrl { get; set; }
         public float Estoque { get; set; }
         public DateTime DataCadastro { get; set; }

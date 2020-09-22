@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,20 @@ namespace WebAPI_NetCore.Controllers
     public class CategoriasController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CategoriasController(AppDbContext contexto)
+        public CategoriasController(AppDbContext contexto,IConfiguration configuration)
         {
             _context = contexto;
+            _configuration = configuration;
+        }
+
+        [HttpGet("autor")]
+        public string GetAutor()
+        {
+            var autor = _configuration["autor"];
+            var conexao = _configuration["ConnectionStrings:DefaultConnection"];
+            return $"Autor: {autor}\tConexao:{conexao}";
         }
 
         [HttpGet("produtos")]
@@ -80,6 +91,6 @@ namespace WebAPI_NetCore.Controllers
             _context.SaveChanges();
 
             return categoria;
-        }
+        } 
     }
 }

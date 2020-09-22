@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebAPI_NetCore.Context;
+using WebAPI_NetCore.Services;
 
 namespace WebAPI_NetCore
 {
@@ -32,6 +33,10 @@ namespace WebAPI_NetCore
             //Ignorar referencia ciclica
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            //Transient: a instacia do servico que será criada a cada vez que for solicidata
+            //Exite também o Scoped em que o objeto injetado será criado uma unica vez
+            //E o Singleton que cria na primeira vez que foi solicitado
+            services.AddTransient<IMeuServico, MeuServico>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

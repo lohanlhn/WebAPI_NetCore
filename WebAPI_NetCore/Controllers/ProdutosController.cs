@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI_NetCore.Context;
 using WebAPI_NetCore.Models;
+using WebAPI_NetCore.Services;
 
 namespace WebAPI_NetCore.Controllers
 {
@@ -13,10 +15,16 @@ namespace WebAPI_NetCore.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context;        
         public ProdutosController(AppDbContext contexto)
         {
             _context = contexto;
+        }
+
+        [HttpGet("saudacao/{nome}")]
+        public ActionResult<string> GetSaudacao([FromServices] IMeuServico meuServico, string nome)
+        {
+            return meuServico.Saudacao(nome);
         }
 
         [HttpGet]
